@@ -16,6 +16,9 @@ const questionSchema = mongoose.Schema({
     type: String,
     enum: ["A", "B", "C", "D"],
   },
+  category: {
+    type: String
+  }
 });
 
 const Question = mongoose.model("Quiz", questionSchema);

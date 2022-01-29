@@ -17,6 +17,33 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
+exports.getByCategory = async (req, res, next) => {
+  try {
+    category = req.params.category;
+
+    const allQuestions = await Question.find();
+    const questions = [];
+
+    allQuestions.map((el) => {
+      if (el.category === category) {
+        questions.push(el);
+      }
+    });
+
+    res.status(200).json({
+      status: "success",
+      results: questions.length,
+      data: { questions },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "failed",
+      message: "An error occured",
+      error: err,
+    });
+  }
+};
+
 exports.createQuestion = async (req, res, next) => {
   try {
     const newQuestion = {
@@ -33,10 +60,10 @@ exports.createQuestion = async (req, res, next) => {
       data: newQuestion,
     });
   } catch (err) {
-      res.status(500).json({
-        status: "failed",
-        message: "An error occured",
-        error: err,
-      });
+    res.status(500).json({
+      status: "failed",
+      message: "An error occured",
+      error: err,
+    });
   }
 };
